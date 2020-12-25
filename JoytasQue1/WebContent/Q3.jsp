@@ -9,8 +9,8 @@
 <body>
 <form action="/JoytasQue1/AnswerServlet" method="post">
 スペイン語で月曜日はLunesである。　
-はい<input type="radio" name="ans" value="0">
-いいえ<input type="radio" name="ans" value="1">
+<label><input type="radio" name="ans" value="0">はい</label>
+<label><input type="radio" name="ans" value="1">いいえ</label>
 <input type="submit" value="送信">
 </form>
 </body>

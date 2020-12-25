@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.*"%>
-    <%
-    String[] oss=request.getParameterValues("os");
-
-    %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,19 +14,15 @@
 	<input type="checkbox" name="os" value="Mac">Mac
 	<input type="checkbox" name="os" value="Linux">Linux
 	<input type="submit" value="送信" name="btn"><br>
+	<!-- submitボタンにnameをつけることで、nullかbtnが返るか設定。
+		一度でも送信ボタンを押していたら結果が表示されるようにしている。 -->
 	</form>
 <%}else if(request.getParameter("os")==null){%>
 	<p>[選択なし]</p>
 <%}else{ %>
+    <% String[] oss=request.getParameterValues("os"); %>
 	<% String ans=String.join(",",oss);%>
  <%= ans %>
-<%--
-	<%for(int i=0;i<oss.length;i++){ %>
-		<%if(oss[i]!=null){%>
-			<%=oss[i] %>
-		<%} %>
-	<%} %>
---%>
 <%} %>
 </body>
 </html>
