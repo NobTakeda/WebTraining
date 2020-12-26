@@ -1,0 +1,41 @@
+body{
+	display:flex;
+	height:100vh;/*縦方向を100とした割合*/
+	flex-direction:column;
+	justify-content:space-around;
+	align-items:center;
+	font-family: "Nico Moji";
+	background:#b7f3a9;
+	color:#333;
+}
+form{
+	font-size:6vmin;/*縦と横の小さい方の幅を100とした割合(ここでは100%)*/
+}
+input{
+	width:4vmin;
+	height:4vmin;
+	position:relative;
+	top:2px;
+}
+button{
+	margin-top:5vmin;
+	width:25vmin;
+	height:8vmin;
+	font-size:5vmin;
+	font-family: "Nico Moji";
+	color:#333;
+}
+div{
+	display:flex;
+	width:80%;
+	justify-content:space-around;
+}
+img{
+	width:35vmin;
+}
+p{
+	font-size:7vmin;
+}
+p .score{
+	font-size:3vmin;
+}
