@@ -17,7 +17,7 @@ public class JobServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html; charset=UTF-8");
+		request.setCharacterEncoding("utf-8");
 
 		String hp=request.getParameter("hp");
 		String mp=request.getParameter("mp");
