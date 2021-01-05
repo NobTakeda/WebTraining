@@ -1,0 +1,120 @@
+body {
+	/*背景に画像を設定*/
+	background: url(../images/bg.jpg);
+	/*背景画像で領域を覆うようにする*/
+	background-size: cover;
+	/*実行している画面の縦幅を高さとする*/
+	height: 100vh;
+	/*フレックスボックスを使って子要素を並べる*/
+	display: flex;
+	/*並べる方向は縦*/
+	flex-direction: column;
+	/*その並べた子要素たちを均等に配置する*/
+	justify-content: space-around;
+	/*その並べた子要素たちは画面に対して真ん中に並ぶようにする*/
+	align-items: center;
+}
+
+#dices {
+	display: flex;
+	justify-content: space-around;
+	padding-bottom: 3vh;
+	border-bottom: 3px dotted #333;
+}
+
+#dices img {
+	width: 12vw;
+	height: 12vw;
+	max-width: 170px;
+	margin: 2vmin;
+}
+
+#dice img {
+	/*最初は透明にして見えないようにしておく*/
+	opacity: 0;
+}
+
+button {
+	/*googleフォントの設定*/
+	font-family: 'Audiowide', cursive;
+	width: 80vw;
+	font-size: 10vmin;
+}
+
+button:hover {
+	/*ボタンにカーソルを載せた時に指マークにする*/
+	cursor: pointer;
+}
+
+button span {
+	font-size: 5vmin;
+	opacity: 0;
+}
+.diceHidden {
+	display: none;
+}
+
+.diceOut {
+	/*diceoutという名のアニメーションを指定*/
+	animation-name: diceOut;
+	/*そのアニメーションの開始を1.5秒遅らせる*/
+	animation-delay: 1.5s;
+	/*アニメーションの時間は2秒*/
+	animation-duration: 2s;
+	/*アニメーションが終わったときの状態を終了後にも保つ*/
+	animation-fill-mode: forwards;
+}
+
+/*アニメーションの作成(名前はdiceOut)*/
+@keyframes diceOut {
+	/*toは最後の状態を指定*/
+	/*徐々に透明にしながら幅を０にしていくアニメーション*/
+	to{
+		width:  0;
+		height: 0;
+		margin: 0;
+		opacity: 0;
+	}
+}
+.diceIn {
+	animation-name: diceIn;
+	animation-delay: 0.5s;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+}
+
+@keyframes diceIn {
+	/*fromは最初の状態を指定*/
+	from {
+		width:0;
+		height: 0;
+		opacity: 0;
+		/*x軸回転の設定最初は0*/
+		transform: rotateX(0);
+	}
+	to {
+		width: 15vw;
+		height: 15vw;
+		opacity: 1;
+		/*最後は360度（1回転)*/
+		transform: rotateX(360deg);
+	}
+}
+.result {
+	display: block;
+	animation-name: result;
+	animation-delay: 1.5s;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+}
+
+@keyframes result {
+	from {
+		opacity:0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+

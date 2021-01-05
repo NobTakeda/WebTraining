@@ -1,0 +1,14 @@
+#shophaikei{
+	height:100vh;
+	margin:auto;
+	background-image:url(../images/yorozuya.png);
+	background-size:cover;
+}
+.open{
+	margin:0 auto;
+	text-align:center;
+}
+
+#buying{
+
+}
