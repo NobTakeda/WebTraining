@@ -3,8 +3,10 @@
     <%
     //セッションスコープに保存されたユーザー情報を取得
     User loginUser=(User) session.getAttribute("loginUser");
-    //アプリケーションスコープに保存されたつぶやきリストを取得
-    List<Mutter> mutterList=(List<Mutter>) application.getAttribute("mutterList");
+    //データベース授業により書き換え
+    List<Mutter> mutterList=(List<Mutter>)request.getAttribute("mutterList");
+    /*アプリケーションスコープに保存されたつぶやきリストを取得
+    List<Mutter> mutterList=(List<Mutter>) application.getAttribute("mutterList");*/
     //リクエストスコープに保存されたエラーメッセージを取得
     String errorMsg=(String) request.getAttribute("errorMsg");
     %>
@@ -28,8 +30,10 @@
 <% if(errorMsg !=null){ %>
 	<p><%= errorMsg %></p>
 <% } %>
+<% if (mutterList!=null){ %>
 <% for(Mutter mutter:mutterList) {%>
 	<p><%= mutter.getUserName() %>:<%= mutter.getText() %></p>
-<%} %>
+<% } %>
+<% } %>
 </body>
 </html>
