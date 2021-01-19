@@ -1,15 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="model.*,java.util.*"%>
 <%
-String searchWord=(String)request.getAttribute("searchWord");
-searchWord= searchWord==null? "":searchWord;
-String mode=(String)request.getAttribute("mode");
-mode= mode==null? "":mode;
-List<Word> list=(List<Word>)request.getAttribute("list");
-Integer total=(Integer)request.getAttribute("total");
-Integer limit=(Integer)request.getAttribute("limit");
-Integer pageNo=(Integer)request.getAttribute("pageNo");
-String pagination=(String)request.getAttribute("pagination");
+EJWord ejw=(EJWord)request.getAttribute("ejw");
 %>
 <!DOCTYPE html>
 <html>
@@ -17,81 +9,60 @@ String pagination=(String)request.getAttribute("pagination");
 <meta charset="UTF-8">
 <title>EJWord</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-<style>
-.container{
-	min-height:calc(100vh - 70px);
-}
-form{
-	matgin:20px auto;
-}
-input,select{
-	margin-right:5px;
-}
-.pager{
-	text-align:left;
-}
-.paginationBox{
-	text-align:center;
-}
-footer{
-	height:40px;
-	background:#347ab7;
-	color:white;
-	text-align:center;
-	line-height:40px;
-	margin-top:30px;
-}
-</style>
+<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 <div class="container">
 <form action="/ejword/main" method="get" class="form-inline">
-<input type="text" name="searchWord" value="<%= searchWord %>" class="form-control" placeholder="検索結果を入力" required>
-<!-- requiredで未入力不可にしている -->
+<input type="text" name="searchWord" value="<%=ejw.getSearchWord()%>" class="form-control" placeholder="検索後を入力" required>
 <select name="mode" class="form-control">
-<option value="startsWith" <%= mode.equals("startsWith")? "selected":"" %>>で始まる</option>
-<option value="contains" <%= mode.equals("contains")? "selected":"" %>>含む</option>
-<option value="endsWith" <%= mode.equals("endsWith")? "selected":"" %>>で終わる</option>
-<option value="match" <%= mode.equals("match")? "selected":"" %>>一致する</option>
+<option value="startsWith" <%=ejw.getMode().equals("startsWith")? " selected":"" %>>で始まる</option>
+<option value="contains" <%=ejw.getMode().equals("contains")? " selected":"" %>>含む</option>
+<option value="endsWith" <%=ejw.getMode().equals("endsWith")? " selected":"" %>>で終わる</option>
+<option value="match" <%=ejw.getMode().equals("match")? " selected":"" %>>一致する</option>
 </select>
 <button type="submit" class="btn btn-primary">検索</button>
 </form>
-<% if(list !=null && list.size() > 0){ %>
-<!-- 件数表示部分作成 -->
-<% if(total <= limit){%>
-<p>全<%= total %>件</p>
-<% }else{ %>
-<%-- ページ番号を利用して何件から何件を表示しているのかを表示する --%>
-	<p>全 <%= total %>件中 <%= (pageNo-1)*limit+1 %>~<%= (pageNo*limit>total)? total:pageNo*limit %>件を表示</p>
-	<%-- ページ番号が1より大きかったら前へのリンクを表示 --%>
-	<ul class="pager">
-		<% if(pageNo > 1) {%>
-			<li>
-				<a href="/ejword/main?searchWord=<%=searchWord %>&mode=<%= mode %>&page=<%= pageNo-1 %>">
-				<span aria-hidden="true">&larr;</span>前へ</a>
-			</li><%-- &larr=レフトアロー --%>
-		<% } %>
-		<%-- 件数が全件数に届かない時は次へのリンクを表示 --%>
-		<% if(pageNo*limit < total){ %>
-			<li>
-				<a href="/ejword/main?searchWord=<%= searchWord %>&mode=<%= mode %>&page=<%= pageNo+1 %>">次へ
-				<span aria-hidden="true">&rarr;</span></a>
-			</li>
-		<% } %>
+<%if(ejw.getList() != null && ejw.getList().size()==0){ %>
+<p>１件も一致しませんでした</p>
+<%} %>
+<% if( ejw.getList() !=null && ejw.getList().size() > 0){ %>
+	<% if(ejw.getTotal() <=ejw.getLimit()){ %>
+		<p>全<%=ejw.getTotal() %>件</p>
+	<%}else{ %>
+		<p>全<%=ejw.getTotal() %>件中
+		<%=(ejw.getPageNo()-1)*ejw.getLimit()+1 %>~
+		<%=ejw.getPageNo()*ejw.getLimit() > ejw.getTotal()? ejw.getTotal():ejw.getPageNo()*ejw.getLimit()  %>
+		件を表示</p>
+		<ul class="pager">
+		<%if(ejw.getPageNo()>1){ %>
+			<li><a href="/ejword/main?searchWord=<%=ejw.getSearchWord() %>&mode=<%=ejw.getMode() %>&page=<%=ejw.getPageNo()-1 %>">←前へ</a></li>
+		<%} %>
+		<%if(ejw.getPageNo()*ejw.getLimit() < ejw.getTotal()){ %>
+			<li><a href="/ejword/main?searchWord=<%=ejw.getSearchWord() %>&mode=<%=ejw.getMode() %>&page=<%=ejw.getPageNo()+1 %>">次へ→</a></li>
+		<%} %>
+		</ul>
+	<%} %>
+	<table class="table table-borderd table-striped">
+	<% for(Word w:ejw.getList()){ %>
+		<tr><th><%=w.getTitle() %></th><td><%=w.getBody() %></td></tr>
+	<%} %>
+	</table>
+<%} %>
+<% if (ejw.getPager() !=null){ %>
+<div class='paginationBox'>
+	<ul class='pagination'>
+	<% for(String[] row:ejw.getPager()){ %>
+		<li class="<%=row[0]%>">
+		<a href="/ejword/main?searchWord=<%=ejw.getSearchWord() %>&mode=<%=ejw.getMode() %>&page=<%=row[1] %>"><%=row[2] %></a>
+		</li>
+	<%} %>
 	</ul>
-<% } %>
-<table class="table table-bordered table-striped">
-<% for(Word w:list){ %>
-<tr><th><%=w.getTitle() %></th><td><%=w.getBody() %></td></tr>
-<% } %>
-</table>
-<% } %>
-<% if(pagination !=null){ %>
-	<%= pagination %>
-<% } %>
-</div><!-- close container -->
+</div>
+<%} %>
+</div>
 <footer>
-&copy; 2017 Joytas.net
+© 2021 Joytas.net
 </footer>
 </body>
 </html>
