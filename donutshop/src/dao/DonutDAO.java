@@ -87,4 +87,52 @@ public class DonutDAO {
 		}
 		return list;
 	}
+	public Donut findOne(int id) {
+		Donut donut=null;
+		try {
+			this.connect();
+			ps=db.prepareStatement("SELECT * FROM donuts WHERE id=?");
+			ps.setInt(1, id);
+			rs=ps.executeQuery();
+			if(rs.next()) {
+				String name=rs.getString("name");
+				int price=rs.getInt("price");
+				String imgname=rs.getString("imgname");
+				donut=new Donut(id,name,price,imgname);
+			}
+		} catch (NamingException | SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}finally {
+			this.disconnect();
+		}
+		return donut;
+	}
+	public void updateOne(Donut donut) {
+		try {
+			this.connect();
+			ps=db.prepareStatement("UPDATE donuts SET name=?,price=?,imgname=? WHERE id=?");
+			ps.setString(1, donut.getName());
+			ps.setInt(2, donut.getPrice());
+			ps.setString(3, donut.getImgname());
+			ps.setInt(4, donut.getId());
+			ps.executeUpdate();
+		} catch (NamingException | SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}finally {
+			this.disconnect();
+		}
+	}
+	public void deleteOne(int id) {
+		try {
+			this.connect();
+			ps=db.prepareStatement("DELETE FROM donuts WHERE id=?");
+			ps.setInt(1,id);
+			ps.executeUpdate();
+		} catch (NamingException | SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+	}
 }
