@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Context>
+  <Resource
+      name="calorieManage"
+      auth="Container"
+      type="javax.sql.DataSource"
+      driverClassName="com.mysql.jdbc.Driver"
+      url="jdbc:mysql://localhost:3306/mycalapp"
+      connectionProperties="autoReconnect=true;verifyServerCertificate=false;useSSL=false;requireSSL=false;useUnicode=true;characterEncoding=UTF-8;"
+      username="root"
+      password="tendon1943"
+      validationQuery="select 1"/>
+ </Context>
