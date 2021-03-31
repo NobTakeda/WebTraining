@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>カロリー管理アプリへようこそ</h1>
-<div>
+<div id="index">
 	<p>必要なデータを入力してください。<br>
 	なお、目標体重に応じた摂取カロリーは<a href="https://keisan.casio.jp/exec/system/1183427246">こちら</a>のサイトから計算できます。</p>
 	<form action="/calorieManage/Main" method="post">

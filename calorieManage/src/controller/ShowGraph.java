@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -21,7 +23,11 @@ public class ShowGraph extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String date=request.getParameter("date");
+		Date dt = new Date(); //現在日時の取得
+		DateFormat df =DateFormat.getDateInstance(); //DateFormatの取得
+		String date = df.format(dt); //formatメソッドを用いて文字列に変換
+
+		System.out.println("今日の日付は"+date);
 		CalDAO dao=new CalDAO();
 		FoodOfDay fod=new FoodOfDay();
 		fod.setDate(date);
@@ -33,7 +39,7 @@ public class ShowGraph extends HttpServlet {
 		List<FoodOfDay> fodlist=dao.findFOD(date);
 		HttpSession session=request.getSession();
 		session.setAttribute("fodlist",fodlist);
-		request.setAttribute("date", date);
+		session.setAttribute("date", date);
 		RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/showgraph.jsp");
 		rd.forward(request, response);
 	}

@@ -59,6 +59,7 @@ public class CalDAO {
 			ps.setInt(2, food.getCal());
 			ps.setInt(3, food.getTime());
 			ps.setString(4, food.getDate());
+			System.out.println("insertOne実行"+ps);
 			ps.execute();
 		} catch (NamingException | SQLException e) {
 			// TODO 自動生成された catch ブロック
@@ -72,6 +73,7 @@ public class CalDAO {
 		try {
 			this.connect();
 			ps=db.prepareStatement("SELECT * FROM foods");
+			System.out.println("findAll実行"+ps);
 			rs=ps.executeQuery();
 			while(rs.next()) {
 				int id=rs.getInt("id");
@@ -96,7 +98,7 @@ public class CalDAO {
 			this.connect();
 			ps=db.prepareStatement("SELECT * FROM foods WHERE updated=? ORDER BY time_id ASC");
 			ps.setString(1, date);
-			//System.out.println(ps);
+			System.out.println("FindToday実行"+ps);
 			rs=ps.executeQuery();
 			while(rs.next()) {
 				int id=rs.getInt("id");
@@ -135,6 +137,7 @@ public class CalDAO {
 			ps.setInt(3, fod.getSupperCal());
 			ps.setInt(4, fod.getTotalCal());
 			ps.setString(5, fod.getDate());
+			System.out.println("insertFOD実行"+ps);
 			ps.execute();
 		} catch (NamingException | SQLException e) {
 			// TODO 自動生成された catch ブロック
@@ -143,6 +146,27 @@ public class CalDAO {
 			this.disconnect();
 		}
 	}
+	public FoodOfDay findOneFOD(String date) {
+		FoodOfDay fod=new FoodOfDay();
+		try {
+			this.connect();
+			ps=db.prepareStatement("SELECT * FROM fod WHERE updated=?");
+			ps.setString(1, date);
+			System.out.println("findOneFOD実行"+ps);
+			rs=ps.executeQuery();
+			while(rs.next()) {
+			fod.setId(rs.getInt("id"));
+			fod.setBreakfastCal(rs.getInt("breakfastCal"));
+			fod.setLunchCal(rs.getInt("lunchCal"));
+			fod.setSupperCal(rs.getInt("supperCal"));
+			fod.setTotalCal(rs.getInt("totalCal"));
+			}
+		} catch (NamingException | SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		return fod;
+	}
 	//fodテーブルを返す
 	public List<FoodOfDay> findFOD(String showDate){
 		List<FoodOfDay> fodList=new ArrayList<>();
@@ -150,7 +174,7 @@ public class CalDAO {
 			this.connect();
 			ps=db.prepareStatement("SELECT * FROM fod WHERE updated<=? ORDER BY updated DESC LIMIT 7");
 			ps.setString(1,showDate);
-			System.out.println(ps);
+			System.out.println("findFOD(fodテーブルにデータがあるかチェック)実行"+ps);
 			rs=ps.executeQuery();
 			while(rs.next()) {
 				int id=rs.getInt("id");
@@ -159,6 +183,7 @@ public class CalDAO {
 				int supperCal=rs.getInt("supperCal");
 				int totalCal=rs.getInt("totalCal");
 				String date=rs.getString("updated");
+				System.out.printf("id=%d,朝=%d,昼=%d,晩=%d,合計=%d,日付=%s%n",id,breakfastCal,lunchCal,supperCal,totalCal,date);
 				fodList.add(new FoodOfDay(id,breakfastCal,lunchCal,supperCal,totalCal,date));
 			}
 		} catch (NamingException | SQLException e) {
@@ -176,7 +201,7 @@ public class CalDAO {
 			ps.setInt(3, fod.getSupperCal());
 			ps.setInt(4, fod.getTotalCal());
 			ps.setString(5, fod.getDate());
-			System.out.println(ps);
+			System.out.println("updateFOD:fodテーブル更新"+ps);
 			ps.executeUpdate();
 		} catch (NamingException | SQLException e) {
 			// TODO 自動生成された catch ブロック
@@ -188,6 +213,7 @@ public class CalDAO {
 			this.connect();
 			ps=db.prepareStatement("DELETE FROM foods WHERE id=?");
 			ps.setInt(1, id);
+			System.out.println("でぇてFood実行"+ps);
 			ps.execute();
 		} catch (NamingException | SQLException e) {
 			// TODO 自動生成された catch ブロック

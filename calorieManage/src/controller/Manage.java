@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -25,21 +26,28 @@ public class Manage extends HttpServlet {
 			request.setAttribute("isRegister", isRegister);
 		}
 		String date=(String)request.getAttribute("date");
-		String showDate=request.getParameter("showDate");
-		if(showDate==null || showDate.length()<=0) {
-			showDate=date;
-		}
+		String showDate=(String)request.getParameter("showDate");
+		System.out.println("Manage.java:doGet"+date);
+		System.out.println("Manage.java:doGet"+showDate);
 		CalDAO dao=new CalDAO();
-
-		List<Food> list=dao.findToday(showDate);
+		List<Food> list=new ArrayList<>();
+		if(showDate==null) {
+			showDate=date;
+			list=dao.findToday(showDate);
+		}else {
+			list=dao.findToday(showDate);
+		}
 		String msg="";
 		HttpSession session=request.getSession();
-		if(list==null) {
+		if(list==null || list.size()==0) {
 			msg="まだ食べたものが登録されていません";
-			session.setAttribute("msg",msg);
+			request.setAttribute("msg",msg);
 		}
-		request.setAttribute("list", list);
-		request.setAttribute("isPush", isPush);
+		session.setAttribute("date", showDate);
+		session.setAttribute("list", list);
+		if(isPush!=null) {
+			request.setAttribute("isPush", isPush);
+		}
 		RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/manage.jsp");
 		rd.forward(request, response);
 	}
@@ -52,10 +60,12 @@ public class Manage extends HttpServlet {
 		int time=Integer.parseInt(request.getParameter("time"));
 		Food food=new Food(name,cal,time,date);
 		CalDAO dao=new CalDAO();
+		dao.ConnectCheck();
 		dao.insertOne(food);
 		//入力したFoodをテーブルに追加
 		List<Food> list=dao.findToday(date);
-		request.setAttribute("list", list);
+		HttpSession session=request.getSession();
+		session.setAttribute("list", list);
 		RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/manage.jsp");
 		rd.forward(request, response);
 	}

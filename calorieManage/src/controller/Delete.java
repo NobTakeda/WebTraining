@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.CalDAO;
 import model.Food;
@@ -25,7 +26,8 @@ public class Delete extends HttpServlet {
 			dao.deleteFood(Integer.parseInt(id));
 		}
 		List<Food> list=dao.findToday(date);
-		request.setAttribute("list",list);
+		HttpSession session=request.getSession();
+		session.setAttribute("list",list);
 		RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/manage.jsp");
 		rd.forward(request, response);
 	}

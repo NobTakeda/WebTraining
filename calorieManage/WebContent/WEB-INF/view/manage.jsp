@@ -2,10 +2,11 @@
     pageEncoding="UTF-8" import="model.*,java.util.*"%>
     <%
     User user=(User)session.getAttribute("user");
-    List<Food> list=(List<Food>)request.getAttribute("list");
+    List<Food> list=(List<Food>)session.getAttribute("list");
     String isRegister=(String)request.getAttribute("isRegister");
     String isPush=(String)request.getAttribute("isPush");
-    String msg=(String)session.getAttribute("msg");
+    String msg=(String)request.getAttribute("msg");
+    String date=(String)session.getAttribute("date");
     %>
 <!DOCTYPE html>
 <html>
@@ -49,9 +50,9 @@
 		<button type="submit" name="isPush" value="true">この日食べたものを見る</button>
 	</form>
 </div>
-<% if(msg.length()>0){ %>
+<% if(msg!=null && msg.contains("まだ")){ %>
 	<h2><%= msg %></h2>
-<%}else if(list!=null ){ %>
+<%}else if(list!=null && list.size()>0){ %>
 <table id="showFoods" border="1">
 	<% int sum=0; %>
 	<% for(int i=0;i<list.size();i++){ %>
@@ -70,14 +71,18 @@
 	<tr><th>合計摂取カロリー</th><td><%= sum %></td></tr>
 </table>
 <form action="/calorieManage/FodUpdate">
-	<button type="submit" name="date" value="<%= list.get(0).getDate() %>">献立を登録する</button><br>
-	<% if(isRegister!=null){ %>
-		<button type="submit" name="update" value="<%= list.get(0).getDate() %>">献立を更新する</button><br>
+	<button type="submit" name="date" value="<%=  list.get(0).getDate() %>">献立を決定する</button><br>
+	<input type="hidden" name="isPush" value="true">
+	<% if(isRegister!=null || isPush!=null){ %>
+		<button type="submit" name="update" value="<%= list.get(0).getDate() %>">決定した献立を更新する</button><br>
+		<input type="hidden" name="isPush" value="true">
 	<% } %>
 </form>
-	<% if(isRegister!=null){ %>
+	<% if(isRegister!=null || isPush!=null){ %>
 		<form action="/calorieManage/ShowGraph">
-			<button type="submit" name="date" value="<?php echo date('Y-m-d');?>">グラフで見る</button><br>
+			<button type="submit">グラフで見る</button><br>
+			<% session.removeAttribute("list"); %>
+			<% session.removeAttribute("date"); %>
 		</form>
 	<% } %>
 <% } %>
