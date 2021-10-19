@@ -28,11 +28,12 @@ public class Login extends HttpServlet {
 		User user=new User();
 		dao.registerCheck(user,userid);
 
+		//登録ボタンが押されているかの判定。nullなら送信ボタン、値があれば登録ボタンと判定する。
 		String pushedRegisterButton=request.getParameter("registerButton");
 		if(pushedRegisterButton==null) {
-
-		}else {
-
+			//処理なし
+		}else{
+			//main.jspでデータ登録ができるようにMain.javaのpostへ飛ばす。
 		}
 
 
