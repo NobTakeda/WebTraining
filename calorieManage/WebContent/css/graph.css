@@ -1,0 +1,50 @@
+#userBox{
+	width:90vh;
+	height:15vh;
+	margin:20px auto;
+	padding:10px 10px;
+	border:2px;
+}
+#graph{
+	width:90vh;
+	margin:auto;
+	padding:20px 20px;
+	background-color:#c0c0c0;
+	display:flex;
+	flex-direction:column;
+}
+#graph .date{
+	width:100%;
+	height:100px;
+	font:15px;
+	line-height:30px;
+	display:flex;
+}
+
+.date .breakfast{
+	height:20px;
+	line-height:20px;
+	background-color:green;
+	justify-content:flex-start;
+}
+.date .lunch{
+	height:20px;
+	line-height:20px;
+	background-color:orange;
+	justify-content:flex-start;
+}
+.date .supper{
+	height:20px;
+	line-height:20px;
+	background-color:blue;
+	justify-content:flex-start;
+
+}
+.date .total{
+	width:200px;
+	height:20px;
+	line-height:20px;
+	text-align:right;
+	justify-content:flex-start;
+
+}
