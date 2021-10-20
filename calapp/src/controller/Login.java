@@ -33,7 +33,12 @@ public class Login extends HttpServlet {
 		if(pushedRegisterButton==null) {
 			//処理なし
 		}else{
-			//main.jspでデータ登録ができるようにMain.javaのpostへ飛ばす。
+			//main.jspでデータ登録ができるようにmakeUser.jspのpostへ飛ばす。
+			request.setAttribute("userid",userid);
+			request.setAttribute("userpass",userpass);
+			RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/makeUser.jsp");
+			rd.forward(request,response);
+			
 		}
 
 
