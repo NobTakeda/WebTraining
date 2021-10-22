@@ -28,7 +28,7 @@ public class Login extends HttpServlet {
 		UserDAO dao=new UserDAO();
 		User user=new User();
 		UserLogic ul=new UserLogic();
-		user=dao.registerCheck(user,userid);
+		user=dao.findOne(userid);
 
 		//登録ボタンが押されているかの判定。nullなら送信ボタン、値があれば登録ボタンと判定する。
 		String pushedRegisterButton=request.getParameter("registerButton");

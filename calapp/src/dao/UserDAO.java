@@ -89,12 +89,12 @@ public class UserDAO {
 			this.disconnect();
 		}
 	}
-	public User findOne(int userid) {
+	public User findOne(String userid) {
 		User user=null;
 		try{
 			this.connect();
 			ps=db.prepareStatement("SELECT * FROM users WHERE userid=?");
-			ps.setInt(1, userid);
+			ps.setString(1, userid);
 			System.out.println("UserDAO,findOne実行"+ps);
 			rs=ps.executeQuery();
 			if(rs.next()) {
