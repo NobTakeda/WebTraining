@@ -1,0 +1,9 @@
+2021/10/22(Fri)
+Login.java改修 >> 送信、登録判別＆id,passの紹介
+MySQL >> userテーブル作成
+やること>> テーブルに合わせてDAOのQuery改修、makeUser.jspの中身。css等は後
+				>> 動作確認の上、自サーバーに実装
+
+2021/10/19(Tue)
+Login.java改修、makeUser.jsp,makeUser.java追加
+やること>>Tableのパラメータを改めて新規作成、UserDAO ,FoodDAO ,MealsDAO,ResultDAOのQuery改修
