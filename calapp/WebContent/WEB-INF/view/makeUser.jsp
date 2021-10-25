@@ -8,9 +8,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>新規ユーザー登録</title>
 </head>
 <body>
-
+	<p>新規ユーザー登録</p>
+	<form action="/calapp/MakeUser" method="post">
+		<table>
+			<tr><th>ID</th><td><input type="text" value="<%= userid %>" name="userid" required></td></tr>
+			<tr><th>パスワード</th><td><input type="text" value="<%= userpass %>" name="userpass" required></td></tr>
+		</table>
+		<button type="submit">登録</button>
+	</form>
 </body>
 </html>
