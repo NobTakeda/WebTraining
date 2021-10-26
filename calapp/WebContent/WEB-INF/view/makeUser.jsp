@@ -3,6 +3,7 @@
     <%
     String userid=(String)request.getAttribute("userid");
     String userpass=(String)request.getAttribute("userpass");
+    String errorMsg=(String)request.getAttribute("errorMsg");
     %>
 <!DOCTYPE html>
 <html>
@@ -12,6 +13,11 @@
 </head>
 <body>
 	<p>新規ユーザー登録</p>
+	<% if(errorMsg == null){ %>
+		<p>こちらの内容でよろしければ登録ボタンを押してください。</p>
+	<% }else if(errorMsg=="sameID"){ %>
+		<p>このIDは既に使われています。</p>
+	<% } %>
 	<form action="/calapp/MakeUser" method="post">
 		<table>
 			<tr><th>ID</th><td><input type="text" value="<%= userid %>" name="userid" required></td></tr>
