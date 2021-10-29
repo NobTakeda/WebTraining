@@ -35,7 +35,7 @@ public class Login extends HttpServlet {
 		String registerMassage=null; //Login.jspに返すエラーメッセージ
 
 		if(pushedRegisterButton==null) {
-			if(user.getUserpass() == null) {
+			if(user == null) {
 				registerMassage="noUser";
 			}else if(user.getUserpass() != userpass){
 				registerMassage="diffPass";
@@ -49,7 +49,7 @@ public class Login extends HttpServlet {
 		}else{
 			//id,passの登録処理。まず全角半角を判定、もし全角だった場合login.jspに戻す。
 			if(ul.isOneByte(userid) && ul.isOneByte(userpass)) {
-				//半角なので、main.jspでデータ登録ができるようにmakeUser.jspのpostへ飛ばす。
+				//半角なので、main.jspでデータ登録ができるようにmakeUser.jspへ飛ばす。
 				request.setAttribute("userid",userid);
 				request.setAttribute("userpass",userpass);
 				RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/makeUser.jsp");

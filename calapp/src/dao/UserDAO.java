@@ -114,4 +114,25 @@ public class UserDAO {
 		}
 		return user;
 	}
+	public void updateUser(User user) {
+		try {
+			this.connect();
+			ps=db.prepareStatement("UPDATE users SET name=?,height=?,weight=?,bmi=?,cal=?,targetcal=?,userid=?,userpass=? WHERE updated=?");
+			ps.setString(1, user.getName());
+			ps.setDouble(2, user.getHeight());
+			ps.setDouble(3, user.getWeight());
+			ps.setDouble(4, user.getBmi());
+			ps.setInt(5, user.getCal());
+			ps.setInt(6, user.getTargetCal());
+			ps.setString(7, user.getUserid());
+			ps.setString(8, user.getUserpass());
+			System.out.println("updateUser:usersテーブル更新"+ps);
+			ps.executeUpdate();
+		} catch (NamingException | SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}finally {
+			this.disconnect();
+		}
+	}
 }

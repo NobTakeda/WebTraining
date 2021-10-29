@@ -1,3 +1,12 @@
+2021/10/29(Fri)
+色々やったけど書き忘れていたこと。
+・MakeUser.java,makeUser.jspの中身を書く
+・UserDAOのinsertOne()改修、updateUser()追加
+・新しいユーザーデータの追加に合わせてMain.javaのpost改修
+・試験用MySQLにテーブルを作り、ユーザーデータを登録するまでの動作確認
+	>>>makeUser.jspからMakeUser.javaの遷移が上手くいかず試行錯誤する。
+
+
 2021/10/22(Fri)
 Login.java改修 >> 送信、登録判別＆id,passの紹介
 MySQL >> userテーブル作成
