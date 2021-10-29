@@ -67,6 +67,19 @@ public class UserDAO {
 		}
 		return resultUser;
 	}
+	public void insertNewUser(User user) {
+		try {
+			this.connect();
+			ps=db.prepareStatement("INSERT INTO users(userid,userpass)" + "VALUES(?,?)");
+			ps.setString(1, user.getUserid());
+			ps.setString(2, user.getUserpass());
+			System.out.println("UserDAO,idとpassのみ登録実行" + ps);
+			ps.execute();
+		} catch (NamingException | SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+	}
 	public void insertOne(User user) {
 		try {
 			this.connect();
@@ -98,15 +111,19 @@ public class UserDAO {
 			System.out.println("UserDAO,findOne実行"+ps);
 			rs=ps.executeQuery();
 			if(rs.next()) {
-				int idNum=rs.getInt("id");
-				String name=rs.getString("name");
-				Double height=rs.getDouble("height");
-				Double weight=rs.getDouble("weight");
-				Double bmi=rs.getDouble("bmi");
-				int cal=rs.getInt("cal");
-				int targetCal=rs.getInt("targetcal");
 				String user_id=rs.getString("userid");
-				user=new User(idNum,name,height,weight,bmi,cal,targetCal,user_id);
+				if(user_id == null) {
+					System.out.println("UserDAO,findOneでIDが見つかりません");
+				}else {
+					int idNum=rs.getInt("id");
+					String name=rs.getString("name");
+					Double height=rs.getDouble("height");
+					Double weight=rs.getDouble("weight");
+					Double bmi=rs.getDouble("bmi");
+					int cal=rs.getInt("cal");
+					int targetCal=rs.getInt("targetcal");
+					user=new User(idNum,name,height,weight,bmi,cal,targetCal,user_id);
+				}
 			}
 		} catch (NamingException | SQLException e) {
 			// TODO 自動生成された catch ブロック

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 
 import dao.UserDAO;
 import model.User;
-import model.UserLogic;
 
 @WebServlet("/MakeUser")
 public class MakeUser extends HttpServlet {
@@ -24,27 +23,31 @@ public class MakeUser extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String name=request.getParameter("name");
-		Double height=Double.parseDouble(request.getParameter("heightCm"));
-		Double weight=Double.parseDouble(request.getParameter("weightKg"));
-		int targetCal=Integer.parseInt(request.getParameter("targetCal"));
-		User user=new User(name,height,weight);
-		user.setTargetCal(targetCal);
-		UserLogic ul=new UserLogic();
-		ul.execute(user);
 		String userid=request.getParameter("userid");
 		String userpass=request.getParameter("userpass");
-		user.setUserid(userid);
-		user.setUserpass(userpass);
-		//ここまででユーザーデータ作成、DAOを呼び出してusersテーブルを更新
+
 		UserDAO dao=new UserDAO();
-		dao.updateUser(user);
+		User user=new User();
+		user=dao.findOne(userid);
+		System.out.println("MakeUser.java内");
 
-		HttpSession session=request.getSession();
-		session.setAttribute("user", user);
-		RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/manage.jsp");
-		rd.forward(request, response);
-
+		if(user == null) {
+			//新規ユーザー登録してmain.jspへ
+			User newUser=new User();
+			newUser.setUserid(userid);
+			newUser.setUserpass(userpass);
+			dao.insertNewUser(newUser);
+			HttpSession session=request.getSession();
+			session.setAttribute("user",user);
+			RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/main.jsp");
+			rd.forward(request,response);
+		}else {
+			//既に同じIDのユーザーがいるため、エラーメッセージを返してmakeUser.jspへ
+			String errorMsg="sameID";
+			request.setAttribute("errorMsg",errorMsg);
+			RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/makeUser.jsp");
+			rd.forward(request,response);
+		}
 	}
 
 }
