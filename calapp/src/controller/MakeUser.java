@@ -38,7 +38,7 @@ public class MakeUser extends HttpServlet {
 			newUser.setUserpass(userpass);
 			dao.insertNewUser(newUser);
 			HttpSession session=request.getSession();
-			session.setAttribute("user",user);
+			session.setAttribute("user",newUser);
 			RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/main.jsp");
 			rd.forward(request,response);
 		}else {

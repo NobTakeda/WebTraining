@@ -29,15 +29,16 @@ public class Login extends HttpServlet {
 		User user=new User();
 		UserLogic ul=new UserLogic();
 		user=dao.findOne(userid);
+		System.out.println("Login.java内情報確認用　id="+user.getUserid()+",pass="+user.getUserpass());
 
 		//登録ボタンが押されているかの判定。nullなら送信ボタン、値があれば登録ボタンと判定する。
 		String pushedRegisterButton=request.getParameter("registerButton");
 		String registerMassage=null; //Login.jspに返すエラーメッセージ
 
 		if(pushedRegisterButton==null) {
-			if(user == null) {
+			if(user.getUserid() == null) {
 				registerMassage="noUser";
-			}else if(user.getUserpass() != userpass){
+			}else if(userpass.equals(user.getUserpass()) == false ){
 				registerMassage="diffPass";
 			}else {
 			//ID,pass共に合っている場合

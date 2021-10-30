@@ -122,7 +122,8 @@ public class UserDAO {
 					Double bmi=rs.getDouble("bmi");
 					int cal=rs.getInt("cal");
 					int targetCal=rs.getInt("targetcal");
-					user=new User(idNum,name,height,weight,bmi,cal,targetCal,user_id);
+					String userpass=rs.getString("userpass");
+					user=new User(idNum,name,height,weight,bmi,cal,targetCal,user_id,userpass);
 				}
 			}
 		} catch (NamingException | SQLException e) {
@@ -134,7 +135,7 @@ public class UserDAO {
 	public void updateUser(User user) {
 		try {
 			this.connect();
-			ps=db.prepareStatement("UPDATE users SET name=?,height=?,weight=?,bmi=?,cal=?,targetcal=?,userid=?,userpass=? WHERE updated=?");
+			ps=db.prepareStatement("UPDATE users SET name=?,height=?,weight=?,bmi=?,cal=?,targetcal=? WHERE userid=?");
 			ps.setString(1, user.getName());
 			ps.setDouble(2, user.getHeight());
 			ps.setDouble(3, user.getWeight());
@@ -142,7 +143,6 @@ public class UserDAO {
 			ps.setInt(5, user.getCal());
 			ps.setInt(6, user.getTargetCal());
 			ps.setString(7, user.getUserid());
-			ps.setString(8, user.getUserpass());
 			System.out.println("updateUser:usersテーブル更新"+ps);
 			ps.executeUpdate();
 		} catch (NamingException | SQLException e) {

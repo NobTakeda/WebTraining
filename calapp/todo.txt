@@ -1,3 +1,8 @@
+2021/10/30(Sat)
+Main.javaによるusersテーブル更新まで確認。
+やること>> foods,mealsテーブルにuseridを紐付けるように改修
+		>>Manage.java等でデータを登録、呼び出しなどする際、useridを紐付けるように改修
+
 2021/10/29(Fri)
 色々やったけど書き忘れていたこと。
 ・MakeUser.java,makeUser.jspの中身を書く
