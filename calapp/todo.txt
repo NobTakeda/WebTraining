@@ -1,3 +1,9 @@
+2021/11/1(Mon)
+Javaの問題でハマって時間が取れなくなったので少しだけ更新。
+・model/food,Mealsのフィールドとコンストラクタ改修
+・manage.jspのform内情報改修
+・manage.javaからの遷移先、各DAOはこれから
+
 2021/10/30(Sat)
 Main.javaによるusersテーブル更新まで確認。
 やること>> foods,mealsテーブルにuseridを紐付けるように改修

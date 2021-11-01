@@ -64,6 +64,7 @@
 					<form action="/calapp/FoodUpdate">
 						<button type="submit" name="id" value="<%= list.get(i).getId() %>" class="databtn">更新</button>
 						<input type="hidden" name="date" value="<%= list.get(i).getDate() %>">
+						<input type="hidden" name="userid" value="<%= user.getUserid() %>">
 					</form>
 					<form action="/calapp/Delete" method="post">
 						<button type="submit" name="id" value="<%= list.get(i).getId() %>" onclick="return confirm('削除してよろしいですか？')" class="databtn">削除</button>
@@ -75,6 +76,7 @@
 			<h3>&#9660;1日分の合計は<%= sum %>kcalです。登録する場合はこちら</h3>
 			<form action="/calapp/Resister" method="post" class="form">
 				<button type="submit" name="date" value="<%= list.get(0).getDate() %>" class="btn">登録</button>
+				<input type="hidden" name="userid" value="<%= user.getUserid() %>">
 			</form>
 		</div>
 	<% }else{ %>
