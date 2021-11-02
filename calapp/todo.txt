@@ -1,3 +1,10 @@
+2021/11/2(Tue)
+FoodDAOのクエリ等改修。
+試験用MySQLのfoods,mealsテーブルへのuserid追加
+manage.jspのform改修
+やること>> それに伴うManage.javaのDAO使用メソッドの引数やらMealsDAOのクエリ改修やら。
+		>>cssは後回し
+
 2021/11/1(Mon)
 Javaの問題でハマって時間が取れなくなったので少しだけ更新。
 ・model/food,Mealsのフィールドとコンストラクタ改修

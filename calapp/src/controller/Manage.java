@@ -34,12 +34,12 @@ public class Manage extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String name=request.getParameter("name");
 		int cal=Integer.parseInt(request.getParameter("cal"));
+		int time=Integer.parseInt(request.getParameter("time"));
 		String date=request.getParameter("date");
 		String listDate=request.getParameter("listDate");
-		//System.out.print(date);
-		int time=Integer.parseInt(request.getParameter("time"));
+		String userid=request.getParameter("userid");
 		FoodDAO dao=new FoodDAO();
-		Food food=new Food(name,cal,time,date);
+		Food food=new Food(name,cal,time,date,userid);
 		dao.ConnectCheck();
 		dao.insertOne(food);
 		if(listDate!=null && date != listDate) {

@@ -53,13 +53,14 @@ public class MealsDAO {
 	public void insertMeals(Meals meals) {
 		try {
 			this.connect();
-			ps=db.prepareStatement("INSERT INTO meals(breakfastCal,lunchCal,supperCal,totalCal,updated)"
-					+ " VALUES(?,?,?,?,?)");
+			ps=db.prepareStatement("INSERT INTO meals(breakfastCal,lunchCal,supperCal,totalCal,updated,userid)"
+					+ " VALUES(?,?,?,?,?,?)");
 			ps.setInt(1, meals.getBreakfastCal());
 			ps.setInt(2, meals.getLunchCal());
 			ps.setInt(3, meals.getSupperCal());
 			ps.setInt(4, meals.getTotalCal());
 			ps.setString(5, meals.getDate());
+			ps.setString(6, meals.getUserid());
 			System.out.println("insertMeals実行"+ps);
 			ps.execute();
 		} catch (NamingException | SQLException e) {
@@ -84,6 +85,7 @@ public class MealsDAO {
 			meals.setSupperCal(rs.getInt("supperCal"));
 			meals.setTotalCal(rs.getInt("totalCal"));
 			meals.setDate(rs.getString("updated"));
+			meals.setDate(rs.getString("userid"));
 			}
 		} catch (NamingException | SQLException e) {
 			// TODO 自動生成された catch ブロック
