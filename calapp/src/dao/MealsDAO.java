@@ -50,7 +50,7 @@ public class MealsDAO {
 		}
 	}
 	//1日の朝、昼、晩、合計のカロリーをmealsテーブルに登録
-	public void insertMeals(Meals meals) {
+	public void insertMeals(Meals meals,String userid) {
 		try {
 			this.connect();
 			ps=db.prepareStatement("INSERT INTO meals(breakfastCal,lunchCal,supperCal,totalCal,updated,userid)"
@@ -60,7 +60,7 @@ public class MealsDAO {
 			ps.setInt(3, meals.getSupperCal());
 			ps.setInt(4, meals.getTotalCal());
 			ps.setString(5, meals.getDate());
-			ps.setString(6, meals.getUserid());
+			ps.setString(6, userid);
 			System.out.println("insertMeals実行"+ps);
 			ps.execute();
 		} catch (NamingException | SQLException e) {
