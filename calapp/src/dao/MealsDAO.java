@@ -70,12 +70,13 @@ public class MealsDAO {
 			this.disconnect();
 		}
 	}
-	public Meals findOneMeals(String date) {
+	public Meals findOneMeals(String date,String userid) {
 		Meals meals=new Meals();
 		try {
 			this.connect();
-			ps=db.prepareStatement("SELECT * FROM meals WHERE updated=?");
+			ps=db.prepareStatement("SELECT * FROM meals WHERE updated=? AND userid=?");
 			ps.setString(1, date);
+			ps.setString(2,userid);
 			System.out.println("findOneMeals実行"+ps);
 			rs=ps.executeQuery();
 			while(rs.next()) {
@@ -96,12 +97,13 @@ public class MealsDAO {
 		return meals;
 	}
 	//7日分のfodテーブルを返す
-	public List<Meals> findWeek(){
+	public List<Meals> findWeek(String userid){
 		List<Meals> mealsList=new ArrayList<>();
 		try {
 			this.connect();
-			ps=db.prepareStatement("SELECT * FROM meals ORDER BY updated DESC LIMIT 7");
-			System.out.println("findWeek(mealsテーブルにデータがあるかチェック)実行"+ps);
+			ps=db.prepareStatement("SELECT * FROM meals WHERE userid=? ORDER BY updated DESC LIMIT 7");
+			ps.setString(1, userid);
+			System.out.println("findWeek(ユーザー"+userid+"のmealsテーブルにデータがあるかチェック)実行"+ps);
 			rs=ps.executeQuery();
 			while(rs.next()) {
 				int id=rs.getInt("id");
@@ -121,15 +123,16 @@ public class MealsDAO {
 		}
 		return mealsList;
 	}
-	public void updateMeals(Meals meals) {
+	public void updateMeals(Meals meals,String userid) {
 		try {
 			this.connect();
-			ps=db.prepareStatement("UPDATE meals SET breakfastCal=?,lunchCal=?,supperCal=?,totalCal=? WHERE updated=?");
+			ps=db.prepareStatement("UPDATE meals SET breakfastCal=?,lunchCal=?,supperCal=?,totalCal=? WHERE updated=? AND userid=?");
 			ps.setInt(1, meals.getBreakfastCal());
 			ps.setInt(2, meals.getLunchCal());
 			ps.setInt(3, meals.getSupperCal());
 			ps.setInt(4, meals.getTotalCal());
 			ps.setString(5, meals.getDate());
+			ps.setString(6, userid);
 			System.out.println("updateMeals:mealsテーブル更新"+ps);
 			ps.executeUpdate();
 		} catch (NamingException | SQLException e) {

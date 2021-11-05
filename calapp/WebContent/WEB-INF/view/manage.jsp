@@ -37,7 +37,7 @@
 			</table>
 			<button type="submit">登録</button>
 			<input type="hidden" name="userid" value="<%= user.getUserid() %>">
-			<% if(list !=null){ %>
+			<% if(list !=null && list.size() > 0){ %>
 				<input type="hidden" name="listDate" value="<%= list.get(0).getDate() %>">
 			<% }else{ }%>
 		</form>
@@ -46,12 +46,13 @@
 			<form action="/calapp/Manage">
 				<div id="dateform">
 					<input type="date" name="date"  required><br>
+					<input type="hidden" name="userid" value="<%= user.getUserid() %>">
 				</div>
 				<button type="submit" class="btn">呼び出し表示</button>
 			</form>
 		</div>
 	</div>
-	<% if(list!=null){ %>
+	<% if(list != null && list.size() > 0){ %>
 		<h2>&#9660;<%= list.get(0).getDate() %>日に食べたもの</h2>
 		<div id="dataBox">
 			<% int sum=0; %>
@@ -79,6 +80,7 @@
 			<form action="/calapp/Register" method="post" class="form">
 				<button type="submit" name="date" value="<%= list.get(0).getDate() %>" class="btn">登録</button>
 				<input type="hidden" name="userid" value="<%= user.getUserid() %>">
+				<input type="hidden" name="hideListButton" value="hideListButton">
 			</form>
 		</div>
 	<% }else{ %>

@@ -42,7 +42,7 @@ public class Manage extends HttpServlet {
 		FoodDAO dao=new FoodDAO();
 		Food food=new Food(name,cal,time,date,userid);
 		dao.ConnectCheck();
-		dao.insertOne(food);
+		dao.insertOne(food,userid);
 		if(listDate!=null && date != listDate) {
 			request.setAttribute("date", listDate);
 			RequestDispatcher rd=request.getRequestDispatcher("/Register");

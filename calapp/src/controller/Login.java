@@ -19,6 +19,8 @@ public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/login.jsp");
+		rd.forward(request,response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -29,7 +31,11 @@ public class Login extends HttpServlet {
 		User user=new User();
 		UserLogic ul=new UserLogic();
 		user=dao.findOne(userid);
-		System.out.println("Login.java内情報確認用　id="+user.getUserid()+",pass="+user.getUserpass());
+		if(user != null) {
+			System.out.println("Login.java内情報確認用　id="+user.getUserid()+",pass="+user.getUserpass());
+		}else {
+			System.out.println("Login.java内情報確認用　userはnullです");
+		}
 
 		//登録ボタンが押されているかの判定。nullなら送信ボタン、値があれば登録ボタンと判定する。
 		String pushedRegisterButton=request.getParameter("registerButton");

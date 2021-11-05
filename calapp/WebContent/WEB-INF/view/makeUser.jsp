@@ -25,5 +25,8 @@
 		</table>
 		<button type="submit">登録</button>
 	</form>
+	<form action="/calapp/Login">
+		<button type="submit">戻る</button>
+	</form>
 </body>
 </html>

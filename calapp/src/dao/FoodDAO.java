@@ -49,7 +49,7 @@ public class FoodDAO {
 			this.disconnect();
 		}
 	}
-	public void insertOne(Food food) {
+	public void insertOne(Food food,String userid) {
 		try {
 			this.connect();
 			ps=db.prepareStatement("INSERT INTO foods(name,cal,time_id,updated,userid)"
@@ -58,7 +58,7 @@ public class FoodDAO {
 			ps.setInt(2, food.getCal());
 			ps.setInt(3, food.getTime());
 			ps.setString(4, food.getDate());
-			ps.setString(5, food.getUserid());
+			ps.setString(5, userid);
 			System.out.println("FoodDAO,insertOne実行"+ps);
 			ps.execute();
 		} catch (NamingException | SQLException e) {
