@@ -16,8 +16,8 @@ import model.Food;
 import model.Meals;
 import model.MealsLogic;
 
-@WebServlet("/Resister")
-public class Resister extends HttpServlet {
+@WebServlet("/Register")
+public class Register extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

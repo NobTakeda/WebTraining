@@ -20,6 +20,7 @@ public class Food implements Serializable{
 		this.time=time;
 		this.date=date;
 	}
+	//↓useridをセットする時このコンストラクタを使用。timeStrの部分にuseridを入れること。
 	public Food(String name,int cal,int time,String date,String timeStr) {
 		this(name,cal,time,date);
 		this.setTimeStr(timeStr);

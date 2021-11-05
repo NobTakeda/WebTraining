@@ -19,8 +19,9 @@ public class Manage extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String date=request.getParameter("date");
+		String userid=request.getParameter("userid");
 		FoodDAO dao=new FoodDAO();
-		List<Food> list=dao.findToday(date);
+		List<Food> list=dao.findToday(date,userid);
 		if(list.size()<1) {
 			RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/manage.jsp");
 			rd.forward(request, response);
@@ -44,11 +45,11 @@ public class Manage extends HttpServlet {
 		dao.insertOne(food);
 		if(listDate!=null && date != listDate) {
 			request.setAttribute("date", listDate);
-			RequestDispatcher rd=request.getRequestDispatcher("/Resister");
+			RequestDispatcher rd=request.getRequestDispatcher("/Register");
 			rd.forward(request, response);
 		}else {
 			//入力したFoodをテーブルに追加
-			List<Food> list=dao.findToday(date);
+			List<Food> list=dao.findToday(date,userid);
 			request.setAttribute("list", list);
 			RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/manage.jsp");
 			rd.forward(request, response);

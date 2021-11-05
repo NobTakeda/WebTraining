@@ -36,6 +36,7 @@
 				<label>晩<input type="radio" name="time" value="2"></label></td></tr>
 			</table>
 			<button type="submit">登録</button>
+			<input type="hidden" name="userid" value="<%= user.getUserid() %>">
 			<% if(list !=null){ %>
 				<input type="hidden" name="listDate" value="<%= list.get(0).getDate() %>">
 			<% }else{ }%>
@@ -74,7 +75,7 @@
 				<% sum+=list.get(i).getCal(); %>
 			<% } %>
 			<h3>&#9660;1日分の合計は<%= sum %>kcalです。登録する場合はこちら</h3>
-			<form action="/calapp/Resister" method="post" class="form">
+			<form action="/calapp/Register" method="post" class="form">
 				<button type="submit" name="date" value="<%= list.get(0).getDate() %>" class="btn">登録</button>
 				<input type="hidden" name="userid" value="<%= user.getUserid() %>">
 			</form>
@@ -85,12 +86,14 @@
 		<h2>&#9660;最新7日分のデータを見る</h2>
 		<form action="/calapp/ShowData" class="form">
 			<button type="submit" class="btn">データ閲覧</button>
+			<input type="hidden" name="userid" value="<%= user.getUserid() %>">
 		</form>
 		<h2>&#9660;指定した日付から30日前までの登録データをJsonで出力</h2>
 		<div id="callData">
 			<form action="/calapp/MakeResult" target="_blank" method="post">
 				<div id="dateform">
 					<input type="date" name="date" required><br>
+					<input type="hidden" name="userid" value="<%= user.getUserid() %>">
 				</div>
 				<button type="submit" class="btn">別タブで開く</button>
 			</form>
