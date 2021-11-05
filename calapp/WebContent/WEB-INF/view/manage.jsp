@@ -70,6 +70,7 @@
 					<form action="/calapp/Delete" method="post">
 						<button type="submit" name="id" value="<%= list.get(i).getId() %>" onclick="return confirm('削除してよろしいですか？')" class="databtn">削除</button>
 						<input type="hidden" name="date" value="<%= list.get(i).getDate() %>">
+						<input type="hidden" name="userid" value="<%= user.getUserid() %>">
 					</form>
 				</div>
 				<% sum+=list.get(i).getCal(); %>
