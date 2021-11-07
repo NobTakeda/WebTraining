@@ -25,29 +25,33 @@ public class MakeUser extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userid=request.getParameter("userid");
 		String userpass=request.getParameter("userpass");
-
-		UserDAO dao=new UserDAO();
-		User user=new User();
-		user=dao.findOne(userid);
-		System.out.println("MakeUser.java内");
-
-		if(user == null) {
-			//新規ユーザー登録してmain.jspへ
-			User newUser=new User();
-			newUser.setUserid(userid);
-			newUser.setUserpass(userpass);
-			dao.insertNewUser(newUser);
-			HttpSession session=request.getSession();
-			session.setAttribute("user",newUser);
-			RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/main.jsp");
+		String returnToLoginPage=request.getParameter("returnToLoginPage");
+		if(returnToLoginPage != null) {
+			RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/login.jsp");
 			rd.forward(request,response);
 		}else {
-			//既に同じIDのユーザーがいるため、エラーメッセージを返してmakeUser.jspへ
-			String errorMsg="sameID";
-			request.setAttribute("errorMsg",errorMsg);
-			RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/makeUser.jsp");
-			rd.forward(request,response);
+			UserDAO dao=new UserDAO();
+			User user=new User();
+			user=dao.findOne(userid);
+			System.out.println("MakeUser.java内");
+
+			if(user == null) {
+				//新規ユーザー登録してmain.jspへ
+				User newUser=new User();
+				newUser.setUserid(userid);
+				newUser.setUserpass(userpass);
+				dao.insertNewUser(newUser);
+				HttpSession session=request.getSession();
+				session.setAttribute("user",newUser);
+				RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/main.jsp");
+				rd.forward(request,response);
+			}else {
+				//既に同じIDのユーザーがいるため、エラーメッセージを返してmakeUser.jspへ
+				String errorMsg="sameID";
+				request.setAttribute("errorMsg",errorMsg);
+				RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/makeUser.jsp");
+				rd.forward(request,response);
+			}
 		}
 	}
-
 }

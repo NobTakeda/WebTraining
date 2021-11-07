@@ -42,7 +42,7 @@ public class Login extends HttpServlet {
 		String registerMassage=null; //Login.jspに返すエラーメッセージ
 
 		if(pushedRegisterButton==null) {
-			if(user.getUserid() == null) {
+			if(user == null) {
 				registerMassage="noUser";
 			}else if(userpass.equals(user.getUserpass()) == false ){
 				registerMassage="diffPass";
